@@ -1,20 +1,20 @@
 # xm-battlesnake-java
 
-A simple [BattleSnake AI](http://battlesnake.io) written in Java, which can easily be deployed to Heroku. The Java app uses Spring Boot to and the Actuator Service to implement rest services required by your snake. This tutorial will help you get started (https://spring.io/guides/gs/actuator-service/).
+A simple [BattleSnake AI](http://battlesnake.io) written in Java using Spring Boot, which can easily be deployed to Heroku. Spring Boot provides a simple and easy way to implement rest services required by your snake. This tutorial will help you get started (https://spring.io/guides/gs/actuator-service/).
 
 This application supports the [Getting Started with Java on Heroku](https://devcenter.heroku.com/articles/getting-started-with-java) article - check it out.
 
 ## Prerequisite Software
 Make sure you install the follwing software:
-- The [GitHub CLI](https://git-scm.com/downloads)
-- The [Heroku CLI](https://cli.heroku.com/).
 - [Java 1.8](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 - [Maven](https://maven.apache.org/install.html)
+- The [GitHub CLI](https://git-scm.com/downloads)
+- The [Heroku CLI](https://cli.heroku.com/).
 
 ## Getting your project started
-- Create a free [GitHub account](https://github.com)
 - Create a free account on [Heroku](https://www.heroku.com/)
-- Fork this [project](https://github.com/xmatters-tko/xm-battlesnake-java/fork)
+- Create a free [GitHub account](https://github.com)
+- Sign in to GitHub and Fork this [project](https://github.com/xmatters-tko/xm-battlesnake-java/fork)
 
 ## Running Locally
 Once all the software is installed and you've forked this project, run the following commands:
