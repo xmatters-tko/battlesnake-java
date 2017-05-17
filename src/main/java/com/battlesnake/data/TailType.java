@@ -14,16 +14,29 @@
  * limitations under the License.
  */
 
-package com.battlesnake;
+package com.battlesnake.data;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.fasterxml.jackson.annotation.JsonValue;
 
-@SpringBootApplication
-public class Main {
+public enum TailType {
+  SMALLRATTLE("small-rattle"),
+  SKINNYTAIL("skinny-tail"),
+  ROUNDBUM("round-bum"),
+  REGULAR("regular"),
+  PIXEL("pixel"),
+  FRECKLED("freckled"),
+  FATRATTLE("fat-rattle"),
+  CURLED("curled"),
+  BLOCKBUM("block-bum");
 
-  public static void main(String[] args) throws Exception {
-    SpringApplication.run(Main.class, args);
+  private String name;
+  private TailType(String name) {
+    this.name= name;
+  }
+
+  @JsonValue
+  public String getName() {
+    return name;
   }
 
 }

@@ -14,16 +14,18 @@
  * limitations under the License.
  */
 
-package com.battlesnake;
+package com.battlesnake.data;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.fasterxml.jackson.annotation.JsonValue;
 
-@SpringBootApplication
-public class Main {
+public enum Move {
+  UP,
+  DOWN,
+  LEFT,
+  RIGHT;
 
-  public static void main(String[] args) throws Exception {
-    SpringApplication.run(Main.class, args);
+  @JsonValue
+  public String getName() {
+    return name().toLowerCase();
   }
-
 }
