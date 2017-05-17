@@ -5,19 +5,20 @@ A simple [BattleSnake AI](http://battlesnake.io) written in Java using Spring Bo
 This application supports the [Getting Started with Java on Heroku](https://devcenter.heroku.com/articles/getting-started-with-java) article - check it out.
 
 ## Prerequisite Software
-Make sure you install the follwing software:
+You'll need the follwing software on your computer before you can get started:
 - [Java 1.8](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 - [Maven](https://maven.apache.org/install.html)
-- The [GitHub CLI](https://git-scm.com/downloads)
-- The [Heroku CLI](https://cli.heroku.com/).
+- [GitHub CLI](https://git-scm.com/downloads)
+- [Heroku CLI](https://cli.heroku.com/).
 
-## Getting your project started
+## Preparing your project
+You'll also need the (free) accounts from the following services:
 - Create a free account on [Heroku](https://www.heroku.com/)
 - Create a free [GitHub account](https://github.com)
 - Sign in to GitHub and Fork this [project](https://github.com/xmatters-tko/xm-battlesnake-java/fork)
 
-## Running Locally
-Once all the software is installed and you've forked this project, run the following commands:
+## Test Your Environment Setup
+At thsi point, make sure that all of you software is installed, and you've forked this project correctly. Run the following commands:
 
 ```sh
 $ git clone https://github.com/<your account>/xm-battlesnake-java.git
@@ -26,13 +27,12 @@ $ mvn install
 $ heroku local
 ```
 
-Your app should now be running on [localhost:5000](http://localhost:5000/).
-
+Your app should now be running on [localhost:5000/health](http://localhost:5000/health).
 
 ## Deploying to Heroku
 
 ### Create an App
-First create a Heroku App and give it a name. This will create a remote git repo for Heroku to use to deploy and run your project.
+Next, create an application on Heroku and give it a name that represents your project. This will create a remote git repo for Heroku to use to deploy and run your project.
 ```sh
 $ heroku create [APP NAME]
 $ git push heroku master
@@ -46,15 +46,14 @@ remote:
 remote: Verifying deploy... done.
 ```
 
-
-### Pushing Updates
+### Pushing Updates to Heroku
 You have to commit your changes to your git project as part of pushing them to the remote heroku git.
 ```sh
 $ git add --all; git commit -m "Updated"; git push
 $ git push heroku master
 ```
 
-### Tailing Logs
+### Debugging Logs on Heroku
 Once your snake is running, you can tail the logs any time in the console using the command:
 ```sh
 $ heroku logs --tail
