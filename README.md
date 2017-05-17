@@ -6,10 +6,16 @@ This application supports the [Getting Started with Java on Heroku](https://devc
 
 ## Prerequisite Software
 You'll need the follwing software on your computer before you can get started:
-- [Java 1.8](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
-- [Maven](https://maven.apache.org/install.html)
-- [GitHub CLI](https://git-scm.com/downloads)
-- [Heroku CLI](https://cli.heroku.com/).
+- [Java 1.8.x](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+- [Maven 3.x](https://maven.apache.org/install.html)
+- [GitHub CLI 2.x](https://git-scm.com/downloads)
+- [Heroku CLI 5.x](https://cli.heroku.com/).
+
+If you have the software installed already, confirm by running the respective commands on the command prompt and check the versions:
+- ```javac -version```
+- ```mvn --version```
+- ```git --version```
+- ```heroku --version```
 
 ## Preparing your project
 You'll also need the (free) accounts from the following services:
