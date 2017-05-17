@@ -24,7 +24,7 @@ You'll also need the (free) accounts from the following services:
 - Sign in to GitHub and Fork this [project](https://github.com/xmatters-tko/xm-battlesnake-java/fork)
 
 ## Test Your Environment Setup
-At thsi point, make sure that all of you software is installed, and you've forked this project correctly. Run the following commands:
+At this point, make sure that all of you software is installed, and you've forked this project correctly. Run the following commands:
 
 ```sh
 $ git clone https://github.com/<your account>/xm-battlesnake-java.git
