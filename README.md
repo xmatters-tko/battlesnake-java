@@ -4,8 +4,13 @@ A simple [BattleSnake AI](http://battlesnake.io) written in Java using Spring Bo
 
 This application supports the [Getting Started with Java on Heroku](https://devcenter.heroku.com/articles/getting-started-with-java) article - check it out.
 
+## Pre-requisite Accounts
+Every team must show up with a laptop and create the following accounts in order to use the provided start snake. You are welcome to use an existing accounts if you have them already.
+* Create a free account on Github - https://www.github.com/
+* Create a free account on Heroku - https://www.heroku.com/
+
 ## Prerequisite Software
-You'll need the follwing software on your computer before you can get started:
+You'll need the follwing software on your computer before you can get started with this project:
 - [GitHub CLI 2.x](https://git-scm.com/downloads)
 - [Heroku CLI 5.x](https://cli.heroku.com/).
 
@@ -20,9 +25,7 @@ If you have the software installed already, confirm by running the respective co
 - ```heroku --version```
 
 ## Preparing your project
-You'll also need the (free) accounts from the following services:
-- Create a free account on [Heroku](https://www.heroku.com/)
-- Create a free [GitHub account](https://github.com)
+You need your own copy of this project under your own GitHub account
 - Sign in to GitHub and Fork this [project](https://github.com/xmatters-tko/xm-battlesnake-java/fork)
 
 ## Test Your Environment Setup
@@ -44,12 +47,10 @@ Run it locally using heroku command:
 ```
 $ heroku local
 ```
-
 #### /start Endpoint
 ```
 $ curl localhost:5000/start -X POST -H "Content-Type: application/json" -d '{"width":20,"height":20,"game_id":"example-game-id"}'
 ```
-
 #### /move Endpoint
 ```
 $ curl localhost:5000/move -X POST -H "Content-Type: application/json" -d '{ "you": "2c4d4d70-8cca-48e0-ac9d-03ecafca0c98","width": 2,"turn": 0,"snakes": [{ "taunt": "git gud","name": "my-snake","id": "2c4d4d70-8cca-48e0-ac9d-03ecafca0c98","health_points": 93,"coords": [[0,0],[0,0],[0,0]] },{ "taunt": "gotta go fast","name": "other-snake","id": "c35dcf26-7f48-492c-b7b5-94ae78fbc713","health_points": 50,"coords": [[1,0],[1,0],[1,0]] }],"height": 2,"game_id": "a2facef2-b031-44ba-a36c-0859c389ef96","food": [[1,1]],"dead_snakes": [{ "taunt": "gotta go fast","name": "other-snake","id": "83fdf2b9-c8d0-44f4-acb2-0c506139079e","health_points": 50,"coords": [[5,0],[5,0],[5,0]] }] }'
@@ -58,7 +59,7 @@ $ curl localhost:5000/move -X POST -H "Content-Type: application/json" -d '{ "yo
 ## Deploying to Heroku
 
 ### Create an App
-Next, create an application on Heroku and give it a name that represents your project. This will create a remote git repo for Heroku to use to deploy and run your project.
+Next, create an application on Heroku and give it a name that represents your project. This will create a remote git repo for Heroku to use to deploy and run your project. Note that you will need to use lower
 ```sh
 $ heroku create [APP NAME]
 $ git push heroku master
@@ -70,6 +71,17 @@ remote:        Released v3
 remote:        https://my-snake.herokuapp.com/ deployed to Heroku
 remote:
 remote: Verifying deploy... done.
+```
+#### Testing the app
+Your app should now be running on [https://my-snake.herokuapp.com/health](https://my-snake.herokuapp.com/health). You can use curl commands to easily test if you snake is working and responding to end points.
+
+#### /start Endpoint
+```
+$ curl https://my-snake.herokuapp.com/start -X POST -H "Content-Type: application/json" -d '{"width":20,"height":20,"game_id":"example-game-id"}'
+```
+#### /move Endpoint
+```
+$ curl https://my-snake.herokuapp.com/move -X POST -H "Content-Type: application/json" -d '{ "you": "2c4d4d70-8cca-48e0-ac9d-03ecafca0c98","width": 2,"turn": 0,"snakes": [{ "taunt": "git gud","name": "my-snake","id": "2c4d4d70-8cca-48e0-ac9d-03ecafca0c98","health_points": 93,"coords": [[0,0],[0,0],[0,0]] },{ "taunt": "gotta go fast","name": "other-snake","id": "c35dcf26-7f48-492c-b7b5-94ae78fbc713","health_points": 50,"coords": [[1,0],[1,0],[1,0]] }],"height": 2,"game_id": "a2facef2-b031-44ba-a36c-0859c389ef96","food": [[1,1]],"dead_snakes": [{ "taunt": "gotta go fast","name": "other-snake","id": "83fdf2b9-c8d0-44f4-acb2-0c506139079e","health_points": 50,"coords": [[5,0],[5,0],[5,0]] }] }'
 ```
 
 ### Pushing Updates to Heroku
