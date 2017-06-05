@@ -5,7 +5,7 @@ A simple [BattleSnake AI](http://battlesnake.io) written in Java using Spring Bo
 This application supports the [Getting Started with Java on Heroku](https://devcenter.heroku.com/articles/getting-started-with-java) article - check it out.
 
 ## Pre-requisite Accounts
-Every team must show up with a laptop and create the following accounts in order to use the provided start snake. You are welcome to use an existing accounts if you have them already.
+Every team must show up with a laptop and create the following accounts in order to use the provided start snake. You are welcome to use existing accounts if you have them already.
 * Create a free account on Github - https://www.github.com/
 * Create a free account on Heroku - https://www.heroku.com/
 
@@ -25,7 +25,7 @@ If you have the software installed already, confirm by running the respective co
 - ```heroku --version```
 
 ## Preparing your project
-DON'T SKIP THIS STEP. You'll need your own copy of this project under your own GitHub account in order to make and publish changes to your snake.
+**DON'T SKIP THIS STEP**. You'll need your own copy of this project under your own GitHub account in order to make and publish changes to your snake.
 - Make sure you are signed in to your GitHub account
 - Fork this [project](https://github.com/xmatters-tko/xm-battlesnake-java/fork)
 
