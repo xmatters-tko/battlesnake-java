@@ -25,8 +25,9 @@ If you have the software installed already, confirm by running the respective co
 - ```heroku --version```
 
 ## Preparing your project
-You need your own copy of this project under your own GitHub account
-- Sign in to GitHub and Fork this [project](https://github.com/xmatters-tko/xm-battlesnake-java/fork)
+DON'T SKIP THIS STEP. You'll need your own copy of this project under your own GitHub account in order to make and publish changes to your snake.
+- Make sure you are signed in to your GitHub account
+- Fork this [project](https://github.com/xmatters-tko/xm-battlesnake-java/fork)
 
 ## Test Your Environment Setup
 At this point, make sure that all of you software is installed, and you've forked this project correctly. Run the following commands:
@@ -59,7 +60,8 @@ $ curl localhost:5000/move -X POST -H "Content-Type: application/json" -d '{ "yo
 ## Deploying to Heroku
 
 ### Create an App
-Next, create an application on Heroku and give it a name that represents your project. This will create a remote git repo for Heroku to use to deploy and run your project. Note that you will need to use lower
+Next, create an application on Heroku and give it a name that represents your project. This will create a remote git repo for Heroku to use to deploy and run your project.
+**NOTE: Name must start with a letter and can only contain lowercase letters, numbers, and dashes.**
 ```sh
 $ heroku create [APP NAME]
 $ git push heroku master
