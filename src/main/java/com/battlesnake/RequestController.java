@@ -36,12 +36,12 @@ public class RequestController {
     @RequestMapping(value="/start", method=RequestMethod.POST, produces="application/json")
     public StartResponse start(@RequestBody StartRequest request) {
         return new StartResponse()
-                .setName("Bowser Snake")
+                .setName("NANO SNAKE")
                 .setColor("#FF0000")
                 .setHeadUrl("http://vignette1.wikia.nocookie.net/nintendo/images/6/61/Bowser_Icon.png/revision/latest?cb=20120820000805&path-prefix=en")
                 .setHeadType(HeadType.DEAD)
                 .setTailType(TailType.PIXEL)
-                .setTaunt("Roarrrrrrrrr!");
+                .setTaunt("Yay!");
     }
 
     @RequestMapping(value="/move", method=RequestMethod.POST, produces = "application/json")
@@ -69,6 +69,8 @@ public class RequestController {
         if (!isPositionSuicidal(request.getSnakes(), headX + 1, headY, boardWidth, boardHeight)) {
             possibleMoves.add(Move.RIGHT);
         }
+        
+//        Move foodMove = getFood(me.getCoords(), request.getFood());
 
         String taunt = "Boo!";
         if (possibleMoves.isEmpty()) {
@@ -95,6 +97,14 @@ public class RequestController {
             }
         }
         return null;
+    }
+    
+    public Move getFood(int[][] ourCoords, int[][] foodCoords) {
+	  if(ourCoords[0][0] > foodCoords[0][0]) return Move.LEFT;
+	  if(ourCoords[0][0] < foodCoords[0][0]) return Move.RIGHT;
+	  if(ourCoords[0][1] > foodCoords[0][1]) return Move.UP;
+	  if(ourCoords[0][1] < foodCoords[0][1]) return Move.DOWN;
+  	  return null;
     }
 
     /**
@@ -135,4 +145,12 @@ public class RequestController {
 
     }
 
+    public boolean closerToFood(int[][] ourCoords, int[][] otherCoords, int[] foodCoords) {
+	  int ourDistance = Math.abs((ourCoords[0][0] - foodCoords[0]) + (ourCoords[0][1] - foodCoords[1]));
+	  int theirDistance = Math.abs((otherCoords[0][0] - foodCoords[0]) + (otherCoords[0][1] - foodCoords[1]));
+	  
+	  if(ourDistance > theirDistance) return false;
+	  return true;
+    }
+  
 }
