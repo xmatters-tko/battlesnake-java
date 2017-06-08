@@ -26,9 +26,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.logging.Logger;
 
 @RestController
 public class RequestController {
+
+    private static final Logger LOGGER = Logger.getLogger("RequestController");
 
     @RequestMapping(value="/start", method=RequestMethod.POST, produces="application/json")
     public StartResponse start(@RequestBody StartRequest request) {
@@ -117,9 +120,11 @@ public class RequestController {
         // Do we run into a snake's existing body segment? Check current position of every segment except
         // for the snake's tail, since it will have moved.
         for (Snake snake : snakes) {
-            for (int i = 0; i < snake.getCoords().length - 2; i++) {
+            for (int i = 0; i < snake.getCoords().length - 1; i++) {
+
                 int snakeX = snake.getCoords()[i][0];
                 int snakeY = snake.getCoords()[i][1];
+
                 if (newX == snakeX && newY == snakeY) {
                     return true;
                 }
