@@ -71,4 +71,8 @@ public class Snake {
     this.coords = coords;
   }
 
+  public int getSize() {
+    return coords.length;
+  }
+
 }
