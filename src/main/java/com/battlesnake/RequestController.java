@@ -42,7 +42,14 @@ public class RequestController {
 
   @RequestMapping(value="/move", method=RequestMethod.POST, produces = "application/json")
   public MoveResponse move(@RequestBody MoveRequest request) {
-    return new MoveResponse()
+	  Snake ourSnake = null;
+	  for(Snake s : request.getSnakes()) {
+		  if(s.getId().equals(request.getYou())) {
+			  ourSnake = s;
+		  }
+	  }
+	  
+   	return new MoveResponse()
       .setMove(Move.DOWN)
       .setTaunt("Going Down!");
   }
