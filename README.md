@@ -11,8 +11,8 @@ Every team must show up with a laptop and create the following accounts in order
 
 ## Prerequisite Software
 You'll need the follwing software on your computer before you can get started with this project:
-- [GitHub CLI 2.x](https://git-scm.com/downloads)
-- [Heroku CLI 5.x](https://cli.heroku.com/).
+- [Git CLI ](https://git-scm.com/downloads)
+- [Heroku CLI ](https://cli.heroku.com/).
 
 You'll need the follwing software on your computer if you want to compile and run the application locally. This is completely optional but probably desired since troubleshooting coding errors and testing behaviour will be much easier. 
 - [Java 1.8.x](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
