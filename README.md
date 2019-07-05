@@ -77,7 +77,7 @@ remote:
 remote: Verifying deploy... done.
 ```
 #### Testing the app
-Your app should now be running on [https://my-snake.herokuapp.com/health](https://my-snake.herokuapp.com/health). You can use curl commands to easily test if you snake is working and responding to end points.
+Your app should now be running on [https://[HEROKU_PROJECT_NAME].herokuapp.com/health](https://[HEROKU_PROJECT_NAME].herokuapp.com/health). You can use curl commands to easily test if you snake is working and responding to end points.
 
 #### /start Endpoint
 ```
@@ -91,7 +91,7 @@ $ curl https://my-snake.herokuapp.com/move -X POST -H "Content-Type: application
 ### Pushing Updates to Heroku
 You have to commit your changes to your git project as part of pushing them to the remote heroku git.
 ```sh
-$ git add --all; git commit -m "Updated"; git push
+$ git add --all; git commit -m "Updated";
 $ git push heroku master
 ```
 
