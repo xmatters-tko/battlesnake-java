@@ -101,6 +101,18 @@ Once your snake is running, you can tail the logs any time in the console using 
 $ heroku logs --tail
 ```
 
+### Local Development
+In order to shorten the devlopment cycle, or do step-through debugging, you probably want to develop locally.  Firstly, run a game server locally using docker:
+```sh
+$ docker run -it -p 4000:4000 stembolt/battle_snake
+```
+Leave this running and go to http://localhost:4000, you should see a grey screen.  Meanwhile, you want to get your snake running locally.  In your local directory where you checked out the Git project, run...
+```sh
+$ ./mvnw idea:idea
+--OR--
+./mvnw eclipse:eclipse
+```
+
 ## Documentation
 
 For more information about using Java on Heroku, see these Dev Center articles:
