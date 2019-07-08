@@ -35,7 +35,7 @@ At this point, make sure that all of you software is installed, and you've forke
 ```sh
 $ git clone https://github.com/<your account>/xm-battlesnake-java.git
 $ cd xm-battlesnake-java
-$ mvn install
+$ mvn install  (or ./mvnw install)
 $ heroku local
 ```
 
