@@ -110,8 +110,13 @@ Leave this running and go to http://localhost:4000, you should see a grey screen
 ```sh
 $ ./mvnw idea:idea
 --OR--
-./mvnw eclipse:eclipse
+$ ./mvnw eclipse:eclipse
 ```
+... to have maven prepare a project for your IDE.  You can run / debug the project by running the /src/main/java/com/battlesnake/Main.java as a normal java process.  (You can probably turn off `heroku local` at this point).  Mine runs on local port 8080, yours might be different.
+
+Now you can try your snake out on your local game server.  Since the server is running in a docker container, and your snake is running outside that container, you need to determine your IP address so that the server can talk to your local snake.  Maybe use something like `ifconfig` or check your System Preferences.  Once you figure that out, click "New Game" on your game server running at localhost:4000.
+
+You might want a smaller board than 20x20, and a much longer API timeout which will give you time to step-through debug your snake.  Enter your snake's location in the Snake's url section using your IP address (e.g. mine is `http://10.3.6.123:8080`).  Play around with the `singleplayer / multiplayer` Game Mode setting. You can enter multipe versions of your own snake.  If you want someone to fight against, my snake is running at `https://stk-battlesnake.herokuapp.com`
 
 ## Documentation
 
