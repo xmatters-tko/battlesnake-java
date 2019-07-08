@@ -112,7 +112,7 @@ $ ./mvnw idea:idea
 --OR--
 $ ./mvnw eclipse:eclipse
 ```
-... to have maven prepare a project for your IDE.  You can run / debug the project by running the /src/main/java/com/battlesnake/Main.java as a normal java process.  (You can probably turn off `heroku local` at this point).  Mine runs on local port 8080, yours might be different.
+... to have maven prepare a project for your IDE.  Create a project as you would any Maven project.  (Eclipse File -> Import -> Maven -> Existing Maven Projects). You can run / debug the project by running the /src/main/java/com/battlesnake/Main.java as a normal java process.  (You can probably turn off `heroku local` at this point).  Mine runs through Heroku on local port 5000, yours might be different.
 
 Now you can try your snake out on your local game server.  Since the server is running in a docker container, and your snake is running outside that container, you need to determine your IP address so that the server can talk to your local snake.  Maybe use something like `ifconfig` or check your System Preferences.  Once you figure that out, click "New Game" on your game server running at localhost:4000.
 
