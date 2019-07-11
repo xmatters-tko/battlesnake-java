@@ -42,10 +42,49 @@ public class RequestController {
         List<Move> towardsFoodMoves = moveTowardsFood(request, mySnake.getCoords());
         List<Move> keepGoingMoves = keepGoing(request, mySnake.getCoords());
         
+        Move selectedMove = null;
+        
         if (towardsFoodMoves != null && !towardsFoodMoves.isEmpty() && mySnake.getHealth() < 50) {
-            return moveResponse.setMove(towardsFoodMoves.get(0));
+            selectedMove = towardsFoodMoves.get(0);
         } else {
-            return moveResponse.setMove(keepGoingMoves.get(0));
+            selectedMove = keepGoingMoves.get(0);
+        }
+        // evade
+        selectedMove = evade(request, mySnake, selectedMove);
+        
+        return moveResponse.setMove(selectedMove);
+    }
+
+    private Move evade(MoveRequest request, Snake mySnake, Move selectedMove) {
+        Point head = new Point(mySnake.getCoords()[0]);
+        for (int i = 0; i < 4; i++) {
+            Point target = head.move(selectedMove);
+            boolean hit = false;
+            for (Snake s: request.getSnakes()) {
+                if(!notBody(s.getCoords(), target.get())) {
+                    hit = true;
+                    selectedMove = clockwise(selectedMove);
+                    break;
+                }
+            }
+            if (!hit) {
+                break;
+            }
+        }
+        return selectedMove;
+    }
+
+    private Move clockwise(Move selectedMove) {
+        switch (selectedMove) {
+        case DOWN:
+            return Move.LEFT;
+        case LEFT:
+            return Move.UP;
+        case UP:
+            return Move.RIGHT;
+        default:
+            return Move.DOWN;
+            
         }
     }
 
@@ -136,24 +175,24 @@ public class RequestController {
      *  @return         A Move that gets you closer to food
      */    
     public ArrayList<Move> moveTowardsFood(MoveRequest request, int[][] mySnake) {
-        int[] mySnakeHead = mySnake[0];
+        Point mySnakeHead = new Point(mySnake[0]);
         ArrayList<Move> towardsFoodMoves = new ArrayList<>();
 
         int[] firstFoodLocation = request.getFood()[request.getFood().length - 1];
 
-        if (firstFoodLocation[0] < mySnakeHead[0] && notBody(mySnake, leftOf(mySnakeHead))) {
+        if (firstFoodLocation[0] < mySnakeHead.x && notBody(mySnake, mySnakeHead.leftOf())) {
             towardsFoodMoves.add(Move.LEFT);
         }
 
-        if (firstFoodLocation[0] > mySnakeHead[0] && notBody(mySnake, rightOf(mySnakeHead))) {
+        if (firstFoodLocation[0] > mySnakeHead.x && notBody(mySnake, mySnakeHead.rightOf())) {
             towardsFoodMoves.add(Move.RIGHT);
         }
 
-        if (firstFoodLocation[1] < mySnakeHead[1] && notBody(mySnake, upOf(mySnakeHead))) {
+        if (firstFoodLocation[1] < mySnakeHead.y && notBody(mySnake, mySnakeHead.upOf())) {
             towardsFoodMoves.add(Move.UP);
         }
 
-        if (firstFoodLocation[1] > mySnakeHead[1] && notBody(mySnake, downOf(mySnakeHead))) {
+        if (firstFoodLocation[1] > mySnakeHead.y && notBody(mySnake, mySnakeHead.downOf())) {
             towardsFoodMoves.add(Move.DOWN);
         }
 
@@ -162,28 +201,10 @@ public class RequestController {
     
     private boolean notBody(int[][] mySnake, int[] target) {
         for (int i = 1; i < mySnake.length; i++) {
-            if (theSame(mySnake[i], target)) {
+            if (new Point(mySnake[i]).theSame(target)) {
                 return false;
             }
         }
         return true;
     }
-
-    private boolean theSame(int[] is, int[] target) {
-        return is[0] == target[0] && is[1] == target[1];
-    }
-
-    private int[] leftOf(int[] point) {
-        return new int[] {point[0]-1, point[1]};
-    }
-    private int[] rightOf(int[] point) {
-        return new int[] {point[0]+1, point[1]};
-    }
-    private int[] upOf(int[] point) {
-        return new int[] {point[0], point[1]-1};
-    }
-    private int[] downOf(int[] point) {
-        return new int[] {point[0], point[1]+1};
-    }
-
 }
