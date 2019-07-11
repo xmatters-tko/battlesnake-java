@@ -26,12 +26,12 @@ public class RequestController {
     @RequestMapping(value="/start", method=RequestMethod.POST, produces="application/json")
     public StartResponse start(@RequestBody StartRequest request) {
         return new StartResponse()
-                .setName("Simple Snake")
+                .setName("Coachwhip")
                 .setColor("#FF3497")
                 .setHeadUrl("http://vignette1.wikia.nocookie.net/nintendo/images/6/61/Bowser_Icon.png/revision/latest?cb=20120820000805&path-prefix=en")
                 .setHeadType(HeadType.DEAD)
                 .setTailType(TailType.PIXEL)
-                .setTaunt("I can find food!");
+                .setTaunt("Hello world!");
     }
 
     @RequestMapping(value="/move", method=RequestMethod.POST, produces = "application/json")
@@ -40,7 +40,7 @@ public class RequestController {
         
         Snake mySnake = findOurSnake(request); // kind of handy to have our snake at this level
         
-        List<Move> towardsFoodMoves = moveTowardsFood(request, mySnake.getCoords()[0]);
+        List<Move> towardsFoodMoves = moveTowardsFood(request, mySnake.getCoords());
         
         if (towardsFoodMoves != null && !towardsFoodMoves.isEmpty()) {
             return moveResponse.setMove(towardsFoodMoves.get(0)).setTaunt("I'm hungry");
@@ -76,28 +76,55 @@ public class RequestController {
      *  @param  request An integer array with the X,Y coordinates of your snake's head
      *  @return         A Move that gets you closer to food
      */    
-    public ArrayList<Move> moveTowardsFood(MoveRequest request, int[] mySnakeHead) {
+    public ArrayList<Move> moveTowardsFood(MoveRequest request, int[][] mySnake) {
+        int[] mySnakeHead = mySnake[0];
         ArrayList<Move> towardsFoodMoves = new ArrayList<>();
 
         int[] firstFoodLocation = request.getFood()[0];
 
-        if (firstFoodLocation[0] < mySnakeHead[0]) {
+        if (firstFoodLocation[0] < mySnakeHead[0] && notBody(mySnake, leftOf(mySnakeHead))) {
             towardsFoodMoves.add(Move.LEFT);
         }
 
-        if (firstFoodLocation[0] > mySnakeHead[0]) {
+        if (firstFoodLocation[0] > mySnakeHead[0] && notBody(mySnake, rightOf(mySnakeHead))) {
             towardsFoodMoves.add(Move.RIGHT);
         }
 
-        if (firstFoodLocation[1] < mySnakeHead[1]) {
+        if (firstFoodLocation[1] < mySnakeHead[1] && notBody(mySnake, upOf(mySnakeHead))) {
             towardsFoodMoves.add(Move.UP);
         }
 
-        if (firstFoodLocation[1] > mySnakeHead[1]) {
+        if (firstFoodLocation[1] > mySnakeHead[1] && notBody(mySnake, downOf(mySnakeHead))) {
             towardsFoodMoves.add(Move.DOWN);
         }
 
         return towardsFoodMoves;
+    }
+    
+    private boolean notBody(int[][] mySnake, int[] target) {
+        for (int i = 1; i < mySnake.length; i++) {
+            if (theSame(mySnake[i], target)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean theSame(int[] is, int[] target) {
+        return is[0] == target[0] && is[1] == target[1];
+    }
+
+    private int[] leftOf(int[] point) {
+        return new int[] {point[0]-1, point[1]};
+    }
+    private int[] rightOf(int[] point) {
+        return new int[] {point[0]+1, point[1]};
+    }
+    private int[] upOf(int[] point) {
+        return new int[] {point[0], point[1]-1};
+    }
+    private int[] downOf(int[] point) {
+        return new int[] {point[0], point[1]+1};
     }
 
 }
