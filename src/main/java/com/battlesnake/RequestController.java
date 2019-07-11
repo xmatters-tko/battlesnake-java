@@ -28,7 +28,7 @@ public class RequestController {
     @RequestMapping(value="/start", method=RequestMethod.POST, produces="application/json")
     public StartResponse start(@RequestBody StartRequest request) {
         return new StartResponse()
-                .setName("Simple Snake")
+                .setName("Jonny 5")
                 .setColor("#FF3497")
                 .setHeadUrl("http://vignette1.wikia.nocookie.net/nintendo/images/6/61/Bowser_Icon.png/revision/latest?cb=20120820000805&path-prefix=en")
                 .setHeadType(HeadType.DEAD)
@@ -45,14 +45,7 @@ public class RequestController {
 
         int[][] map = getMap(request);
 
-        Move theMove = getValidMove(map, head);
-//        for (Move move : Move.values()) {
-//            if (moveIsOk(map, head, move)) {
-//                theMove = move;
-//                break;
-//            }
-//        }
-        
+
 //        List<Move> towardsFoodMoves = moveTowardsFood(request, mySnake.getCoords()[0]);
         
 //        if (towardsFoodMoves != null && !towardsFoodMoves.isEmpty()) {
@@ -60,7 +53,7 @@ public class RequestController {
 //        } else {
 //            return moveResponse.setMove(Move.DOWN).setTaunt("Oh Drat");
 //        }
-            return moveResponse.setMove(theMove).setTaunt("???");
+            return moveResponse.setMove(getMove(request, mySnake, map, head)).setTaunt("???");
     }
 
     @RequestMapping(value="/end", method=RequestMethod.POST)
@@ -68,6 +61,22 @@ public class RequestController {
         // No response required
         Map<String, Object> responseObject = new HashMap<String, Object>();
         return responseObject;
+    }
+
+    Move getMove(MoveRequest request, Snake mySnake, int[][] map, int[] head) {
+        ArrayList<Move> foodMoves = moveTowardsFood(request, mySnake.getCoords()[0]);
+        for (Move foodMove : foodMoves) {
+            if (moveIsOk(map, head, foodMove))
+                return foodMove;
+        }
+
+        for (Move move : Move.values()) {
+            if (moveIsOk(map, head, move)) {
+                return move;
+            }
+        }
+
+        return Move.UP;
     }
 
     int[][] getMap(MoveRequest request) {
@@ -97,7 +106,7 @@ public class RequestController {
             return head[0] < map.length - 1 && map[head[0] + 1][head[1]] > 0;
         }
         if (move == Move.DOWN) {
-            return head[1] > map[0].length - 1 && map[head[0]][head[1] + 1] > 0;
+            return head[1] < map[0].length - 1 && map[head[0]][head[1] + 1] > 0;
         }
         // UP
         return head[1] > 0 && map[head[0]][head[1] - 1] > 0;
