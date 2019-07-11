@@ -110,11 +110,11 @@ public class RequestController {
         if (head[0] < map.length - 1 && map[head[0] + 1][head[1]] > 0) {
             return Move.RIGHT;
         }
-        if (head[1] > map[0].length - 1 && map[head[0]][head[1] + 1] > 0) {
-            return Move.UP;
+        if (head[1] < map[0].length - 1 && map[head[0]][head[1] + 1] > 0) {
+            return Move.DOWN;
         }
         // UP
-        return Move.DOWN;
+        return Move.UP;
     }
 
     /*
