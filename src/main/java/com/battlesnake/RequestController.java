@@ -85,7 +85,8 @@ public class RequestController {
         double[][] map = new double[width][height];
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                map[x][y] = 1 + (getDistanceFromFood(request, x, y) / (width * height));
+                map[x][y] = 1
+                        + (((width * height) - getDistanceFromFood(request, x, y)) / (width * height));
             }
         }
 
