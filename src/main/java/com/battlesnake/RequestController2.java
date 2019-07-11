@@ -22,7 +22,7 @@ import jdk.internal.util.xml.impl.Pair;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class RequestController {
+public class RequestController2 {
 
     private double FOOD_MODIFIER = 0.5;
 
