@@ -39,14 +39,73 @@ public class RequestController {
         MoveResponse moveResponse = new MoveResponse();
         
         Snake mySnake = findOurSnake(request); // kind of handy to have our snake at this level
-        
         List<Move> towardsFoodMoves = moveTowardsFood(request, mySnake.getCoords());
+        List<Move> keepGoingMoves = keepGoing(request, mySnake.getCoords());
         
-        if (towardsFoodMoves != null && !towardsFoodMoves.isEmpty()) {
-            return moveResponse.setMove(towardsFoodMoves.get(0)).setTaunt("I'm hungry");
+        if (towardsFoodMoves != null && !towardsFoodMoves.isEmpty() && mySnake.getHealth() < 50) {
+            return moveResponse.setMove(towardsFoodMoves.get(0));
         } else {
-            return moveResponse.setMove(Move.DOWN).setTaunt("Oh Drat");
+            return moveResponse.setMove(keepGoingMoves.get(0));
         }
+    }
+
+    private List<Move> keepGoing(MoveRequest request, int[][] coords) {
+        ArrayList<Move> moves = new ArrayList<>();
+        if (coords.length < 2) {
+            moves.add(Move.LEFT);
+        }
+        Point head = new Point(coords[0]);
+        Point neck = new Point(coords[1]);
+        if (head.x == neck.x) {
+            if (head.y < neck.y) {
+                // up
+                if (head.y == 0) {
+                    if (head.x == 0) {
+                        moves.add(Move.RIGHT);
+                    } else {
+                        moves.add(Move.LEFT);
+                    }
+                } else {
+                    moves.add(Move.UP);
+                }
+            } else {
+                // down
+                if (head.y == request.getHeight() - 1) {
+                    if (head.x == 0) {
+                        moves.add(Move.RIGHT);
+                    } else {
+                        moves.add(Move.LEFT);
+                    }
+                } else {
+                    moves.add(Move.DOWN);
+                }
+            }
+        } else {
+            if (head.x < neck.x) {
+                // left
+                if (head.x == 0) {
+                    if (head.y == 0) {
+                        moves.add(Move.DOWN);
+                    } else {
+                        moves.add(Move.UP);
+                    }
+                } else {
+                    moves.add(Move.LEFT);
+                }
+            } else {
+                // right
+                if (head.x == request.getWidth() - 1) {
+                    if (head.y == 0) {
+                        moves.add(Move.DOWN);
+                    } else {
+                        moves.add(Move.UP);
+                    }
+                } else {
+                    moves.add(Move.RIGHT);
+                }
+            }
+        }
+        return moves;
     }
 
     @RequestMapping(value="/end", method=RequestMethod.POST)
@@ -80,7 +139,7 @@ public class RequestController {
         int[] mySnakeHead = mySnake[0];
         ArrayList<Move> towardsFoodMoves = new ArrayList<>();
 
-        int[] firstFoodLocation = request.getFood()[0];
+        int[] firstFoodLocation = request.getFood()[request.getFood().length - 1];
 
         if (firstFoodLocation[0] < mySnakeHead[0] && notBody(mySnake, leftOf(mySnakeHead))) {
             towardsFoodMoves.add(Move.LEFT);
