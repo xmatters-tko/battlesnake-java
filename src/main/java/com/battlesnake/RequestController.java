@@ -18,12 +18,13 @@ package com.battlesnake;
 
 import com.battlesnake.data.*;
 import java.util.*;
+import jdk.internal.util.xml.impl.Pair;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class RequestController {
 
-
+    private double FOOD_MODIFIER = 0.5;
 
     @RequestMapping(value="/start", method=RequestMethod.POST, produces="application/json")
     public StartResponse start(@RequestBody StartRequest request) {
@@ -43,7 +44,7 @@ public class RequestController {
         Snake mySnake = findOurSnake(request); // kind of handy to have our snake at this level
         int[] head = mySnake.getCoords()[0];
 
-        int[][] map = getMap(request);
+        double[][] map = getMap(request);
 
 
 //        List<Move> towardsFoodMoves = moveTowardsFood(request, mySnake.getCoords()[0]);
@@ -63,27 +64,28 @@ public class RequestController {
         return responseObject;
     }
 
-    Move getMove(MoveRequest request, Snake mySnake, int[][] map, int[] head) {
-        ArrayList<Move> foodMoves = moveTowardsFood(request, mySnake.getCoords()[0]);
-        for (Move foodMove : foodMoves) {
-            if (moveIsOk(map, head, foodMove))
-                return foodMove;
-        }
+    Move getMove(MoveRequest request, Snake mySnake, double[][] map, int[] head) {
+        double topScore = 0;
+        Move move = Move.UP;
 
-        for (Move move : Move.values()) {
-            if (moveIsOk(map, head, move)) {
-                return move;
+        for (Move thisMove : Move.values()) {
+            double score = getScore(map, head, move);
+            if (score > topScore){
+                topScore = score;
+                move = thisMove;
             }
         }
-
-        return Move.UP;
+        return move;
     }
 
-    int[][] getMap(MoveRequest request) {
-        int[][] map = new int[request.getWidth()][request.getHeight()];
-        for (int x = 0; x < request.getWidth(); x++) {
-            for (int y = 0; y < request.getHeight(); y++) {
-                map[x][y] = 1;
+    double[][] getMap(MoveRequest request) {
+        int width = request.getWidth();
+        int height = request.getHeight();
+
+        double[][] map = new double[width][height];
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                map[x][y] = 1 + (getDistanceFromFood(request, x, y) / (width * height));
             }
         }
 
@@ -95,7 +97,23 @@ public class RequestController {
             }
         }
 
+
         return map;
+    }
+
+    double getScore(double[][] map, int[] head, Move move) {
+        if (move == Move.LEFT) {
+            return head[0] <= 0 ? 0 : map[head[0] - 1][head[1]];
+        }
+        if (move == Move.RIGHT) {
+            return head[0] < map.length - 1 ? map[head[0] + 1][head[1]] : 0;
+        }
+        if (move == Move.DOWN) {
+            return head[1] < map[0].length - 1 ? map[head[0]][head[1] + 1] : 0;
+        }
+        // UP
+        return head[1] > 0 ? map[head[0]][head[1] - 1] : 0;
+
     }
 
     boolean moveIsOk(int[][] map, int[] head, Move move) {
@@ -136,6 +154,11 @@ public class RequestController {
         String myUuid = request.getYou();
         List<Snake> snakes = request.getSnakes();
         return snakes.stream().filter(thisSnake -> thisSnake.getId().equals(myUuid)).findFirst().orElse(null);
+    }
+
+    public double getDistanceFromFood(MoveRequest request, int x, int y) {
+        int[] firstFoodLocation = request.getFood()[0];
+        return Math.abs(firstFoodLocation[0] - x) + Math.abs(firstFoodLocation[1] - y);
     }
 
     /*
