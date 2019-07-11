@@ -45,13 +45,13 @@ public class RequestController {
 
         int[][] map = getMap(request);
 
-        Move theMove = Move.UP;
-        for (Move move : Move.values()) {
-            if (moveIsOk(map, head, move)) {
-                theMove = move;
-                break;
-            }
-        }
+        Move theMove = getValidMove(map, head);
+//        for (Move move : Move.values()) {
+//            if (moveIsOk(map, head, move)) {
+//                theMove = move;
+//                break;
+//            }
+//        }
         
 //        List<Move> towardsFoodMoves = moveTowardsFood(request, mySnake.getCoords()[0]);
         
@@ -100,7 +100,21 @@ public class RequestController {
             return head[1] > map[0].length - 1 && map[head[0]][head[1] + 1] > 0;
         }
         // UP
-            return head[1] > 0 && map[head[0]][head[1] - 1] > 0;
+        return head[1] > 0 && map[head[0]][head[1] - 1] > 0;
+    }
+
+    Move getValidMove(int[][] map, int[] head) {
+        if (head[0] > 0 && map[head[0] - 1][head[1]] > 0) {
+            return Move.LEFT;
+        }
+        if (head[0] < map.length - 1 && map[head[0] + 1][head[1]] > 0) {
+            return Move.RIGHT;
+        }
+        if (head[1] > map[0].length - 1 && map[head[0]][head[1] + 1] > 0) {
+            return Move.UP;
+        }
+        // UP
+        return Move.DOWN;
     }
 
     /*
